@@ -1,0 +1,7 @@
+[
+  {
+    "icon": "person-add-outline",
+    "name": "Registro Empleado",
+    "redirectTo": "/registro-empleado"
+  }
+]

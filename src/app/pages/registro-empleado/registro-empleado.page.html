@@ -1,0 +1,113 @@
+<app-header titulo="Registro de Empleado"></app-header>
+
+<ion-content class="ion-padding">
+
+  <form #formulario="ngForm" (ngSubmit)="onRegistrar(formulario)">
+
+    <ion-list>
+
+      <ion-list-header>
+        <ion-label>Formulario válido: {{ formulario.valid }}</ion-label>
+      </ion-list-header>
+
+      <!-- Nombre completo -->
+      <ion-item [class.ion-invalid]="nombreCtrl.invalid && nombreCtrl.touched"
+                [class.ion-valid]="nombreCtrl.valid">
+        <ion-label position="floating">Nombre completo *</ion-label>
+        <ion-input
+          type="text"
+          name="nombreCompleto"
+          [(ngModel)]="empleado.nombreCompleto"
+          #nombreCtrl="ngModel"
+          required
+          placeholder="Ej: Juan Pérez">
+        </ion-input>
+        <ion-note slot="error">El nombre completo es obligatorio.</ion-note>
+      </ion-item>
+
+      <!-- Cargo -->
+      <ion-item [class.ion-invalid]="cargoCtrl.invalid && cargoCtrl.touched"
+                [class.ion-valid]="cargoCtrl.valid">
+        <ion-label position="floating">Cargo *</ion-label>
+        <ion-input
+          type="text"
+          name="cargo"
+          [(ngModel)]="empleado.cargo"
+          #cargoCtrl="ngModel"
+          required
+          minlength="3"
+          placeholder="Ej: Desarrollador">
+        </ion-input>
+        <ion-note slot="helper">Mínimo 3 caracteres</ion-note>
+        <ion-note slot="error">
+          <span *ngIf="cargoCtrl.errors?.['required']">El cargo es obligatorio.</span>
+          <span *ngIf="cargoCtrl.errors?.['minlength']">Mínimo 3 caracteres.</span>
+        </ion-note>
+      </ion-item>
+
+      <!-- Salario -->
+      <ion-item [class.ion-invalid]="salarioCtrl.invalid && salarioCtrl.touched"
+                [class.ion-valid]="salarioCtrl.valid">
+        <ion-label position="floating">Salario *</ion-label>
+        <ion-input
+          type="number"
+          name="salario"
+          [(ngModel)]="empleado.salario"
+          #salarioCtrl="ngModel"
+          required
+          min="451"
+          placeholder="Ej: 800">
+        </ion-input>
+        <ion-note slot="helper">Debe ser mayor a $450</ion-note>
+        <ion-note slot="error">
+          <span *ngIf="salarioCtrl.errors?.['required']">El salario es obligatorio.</span>
+          <span *ngIf="salarioCtrl.errors?.['min']">El salario debe ser mayor a $450.</span>
+        </ion-note>
+      </ion-item>
+
+      <!-- Correo -->
+      <ion-item [class.ion-invalid]="correoCtrl.invalid && correoCtrl.touched"
+                [class.ion-valid]="correoCtrl.valid">
+        <ion-label position="floating">Correo electrónico *</ion-label>
+        <ion-input
+          type="email"
+          name="correo"
+          [(ngModel)]="empleado.correo"
+          #correoCtrl="ngModel"
+          required
+          [pattern]="correoPattern"
+          placeholder="Ej: juan@empresa.com">
+        </ion-input>
+        <ion-note slot="helper">Ingrese un correo válido</ion-note>
+        <ion-note slot="error">
+          <span *ngIf="correoCtrl.errors?.['required']">El correo es obligatorio.</span>
+          <span *ngIf="correoCtrl.errors?.['pattern']">Formato de correo inválido.</span>
+        </ion-note>
+      </ion-item>
+
+    </ion-list>
+
+    <!-- Botón Registrar -->
+    <ion-button
+      type="submit"
+      expand="block"
+      color="primary"
+      [disabled]="formulario.invalid">
+      <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+      Registrar
+    </ion-button>
+
+    <!-- Botón Limpiar -->
+    <ion-button
+      type="button"
+      expand="block"
+      fill="outline"
+      color="medium"
+      (click)="formulario.resetForm()">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Limpiar
+    </ion-button>
+
+  </form>
+
+</ion-content>
